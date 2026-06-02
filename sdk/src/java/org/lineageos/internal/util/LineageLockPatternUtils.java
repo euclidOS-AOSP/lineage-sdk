@@ -16,10 +16,18 @@ public class LineageLockPatternUtils extends LockPatternUtils {
     }
 
     public boolean shouldPassToSecurityView(int userId) {
-        return getBoolean(LineageSettings.Secure.LOCK_PASS_TO_SECURITY_VIEW, false, userId);
+           try {
+            return getLockSettings().getBoolean(LineageSettings.Secure.LOCK_PASS_TO_SECURITY_VIEW, false, userId);
+        } catch (android.os.RemoteException e) {
+            return false;
+        }
     }
 
     public void setPassToSecurityView(boolean enabled, int userId) {
-        setBoolean(LineageSettings.Secure.LOCK_PASS_TO_SECURITY_VIEW, enabled, userId);
+          try {
+            getLockSettings().setBoolean(LineageSettings.Secure.LOCK_PASS_TO_SECURITY_VIEW, enabled, userId);
+        } catch (android.os.RemoteException e) {
+            // Ignore
+        }
     }
 }
