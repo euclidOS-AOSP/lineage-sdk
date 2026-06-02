@@ -102,7 +102,8 @@ public final class LockSettings implements Parcelable {
         boolean enable;
         final DevicePolicyManager devicePolicyManager =
                 (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-        if (devicePolicyManager != null && devicePolicyManager.requireSecureKeyguard()) {
+        if (devicePolicyManager != null && devicePolicyManager.getPasswordQuality(null)
+           > DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
             enable = true;
         } else {
             switch (mValue) {
